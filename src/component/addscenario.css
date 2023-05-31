@@ -1,0 +1,43 @@
+
+.container{
+    display: flex;
+    background-color:rgb(21, 27, 27);
+    color: aliceblue;
+    width: 100%;
+}
+.innercontainer{
+    margin-left: 5%;
+  }
+  
+
+ .scenariocontainer{
+    display: grid;
+    width: 700px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.555);
+    border: 1px solid rgba(0, 0, 0, 0.555);
+    grid-template-columns: 500px  500px;
+    padding: 5%;
+
+ }
+ .scenariocontaineritem{
+    width: 150px;
+ }
+input{
+    background-color: transparent;
+    width: 200px;
+    height: 40px;
+    color: aliceblue;
+    border-color: rgb(245, 228, 228);
+   
+}
+.action-btn{
+    display: block;
+    margin-left: 10px;
+    padding: 5%;
+}
+
+button{
+    width: 100px;
+    height: 50px;
+}

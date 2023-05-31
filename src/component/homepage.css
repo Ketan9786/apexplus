@@ -1,0 +1,50 @@
+.container{
+  display: flex;
+  background-color:rgb(21, 27, 27);
+  color: aliceblue;
+  width: 100%;
+}
+.innercontainer{
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+}
+
+
+
+
+table{
+  margin-top: 5%;
+  border-collapse: collapse;
+}
+th{
+  text-align: left;
+  padding: 8px;
+  border:1px solid grey;
+  background-color: grey;
+}
+
+  .action-btn{
+    display: flex;
+    margin-left: 65%;
+    justify-content: space-between;
+  }
+
+  .graph{
+    display: grid;
+    background-color: black;
+    width: 700px;
+    height: 250px;
+    margin-top: 5%;
+    border: 1px solid green;
+    grid-template-rows: 50px 50px 50px 50px 50px 50px;
+    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
+  }
+ .graphitem{
+  background-color: transparent;
+  border: 1px solid green;
+  height: 50px ;
+  width: 50px;
+ }
+
+ 
