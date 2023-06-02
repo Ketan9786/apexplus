@@ -1,8 +1,124 @@
 import SideBar from "./SideBar"
+import{useState,useEffect}from "react"
 import "./homepage.css"
-
-
+import axios, { all } from 'axios';
+import Hometable from "./Hometable";
 function Homepage() {
+    const [datas,setDatas]=useState([]);
+    const [start,setStart]=useState(true);
+  
+    let x,y;
+   
+    async function performAPICall() {
+
+        try {
+        
+           const response = await axios.get("http://localhost:3000/scenario")    
+           const scenarios = response.data;
+            
+           setDatas(scenarios);
+           
+        } catch(error) {
+            console.log(error);
+        }
+       
+      }
+      useEffect(() => {
+
+        performAPICall();
+     
+      },[]);
+
+      
+     const simulator = ()=>{
+       
+        
+      let eledown= document.getElementsByName("downword");
+      let eleup= document.getElementsByName("upword");
+      let eleto= document.getElementsByName("toword");
+      let eleback= document.getElementsByName("backword");
+
+      for(let i=0;i<eleto.length;i++){
+        let speed=document.getElementsByName("toword")[0].id.slice(0,2);
+        // console.log(speed)
+        let newelm =eleto[i].style.left.split("px");
+         
+         let newele= parseInt(newelm[0])+parseInt(speed);
+         console.log(newele)
+         let towords = newele + "px"
+        
+         document.getElementsByName("toword")[i].style.left=towords;
+      
+             if(newele >700){
+                 document.getElementsByName("toword")[i].style.display="none" 
+             }
+       }
+
+       for(let i=0;i<eleback.length;i++){
+        let speed=document.getElementsByName("backword")[0].id.slice(0,2);
+        let newelm =eleback[i].style.left.split("px");
+         
+         let newele= parseInt(newelm[0])-parseInt(speed);
+         let backword = newele + "px"
+        
+         document.getElementsByName("backword")[i].style.left=backword;
+      
+             if(newele < -15){
+                 document.getElementsByName("backword")[i].style.display="none" 
+             }
+       }
+        
+      for(let i=0;i<eledown.length;i++){
+        let speed=document.getElementsByName("downword")[0].id.slice(0,2);
+       let newelm =eledown[i].style.top.split("px");
+        
+        let newele= parseInt(newelm[0])+parseInt(speed);
+        let downword = newele + "px"
+       
+        document.getElementsByName("downword")[i].style.top=downword;
+     
+            if(newele >235){
+                document.getElementsByName("downword")[i].style.display="none" 
+            }
+      }
+      
+      for(let i=0;i<eleup.length;i++){
+        let speed=document.getElementsByName("upword")[0].id.slice(0,2);
+        let newelm =eleup[i].style.top.split("px");
+         
+         let newele= parseInt(newelm[0])-parseInt(speed);
+         let upwords = newele + "px"
+        
+         document.getElementsByName("upword")[i].style.top=upwords;
+      
+             if(newele < -15){
+                 document.getElementsByName("upword")[i].style.display="none" 
+             }
+       }
+      
+      
+     }
+     let startsimulators;
+     const startsimulator = ()=>{ 
+        setStart(true);
+        if(start == true){
+            startsimulators  = setInterval(simulator, 1000);
+          
+        } 
+        
+     }
+     
+    
+    const stopimulator=()=>{
+        clearInterval(startsimulators);
+        
+    }
+    
+    
+        
+
+   
+   
 
     return (
         <>
@@ -10,13 +126,30 @@ function Homepage() {
             <SideBar />
                 <div className="innercontainer">
                     <div>
-                    <p>Scenario  </p>
-                    <select name="Scenario" id="Scenario">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                    </select>
+                
+                    
+                     
+                            <p>Scenario  </p>
+                            <select>
+                            {datas &&(
+                                   <>
+                            {
+                                datas.map((data)=>{
+                                  
+                                    return (
+                                        <>
+                                    
+                                            <option>{data.scenarioname}</option>
+                                            
+                                        </>
+                                    )
+                                })
+                            }
+                           
+                        </>
+                    )
+                    }  
+                  </select>
                     </div>
 
                 
@@ -28,36 +161,64 @@ function Homepage() {
                                 <th>Position Y </th>
                                 <th>Speed </th>
                                 <th>Direction</th>
+                                <th>Add Vehicle</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Car</td>
-                                <td>10</td>
-                                <td>20</td>
-                                <td>3</td>
-                                <td>Upword</td>
-                                <td><button>Edit</button></td>
-                                <td><button>Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Car</td>
-                                <td>10</td>
-                                <td>20</td>
-                                <td>3</td>
-                                <td>Upword</td>
-                                <td><button>Edit</button></td>
-                                <td><button>Delete</button></td>
-                            </tr>
+                            {datas && (
+                                <>
+                               {
+                                datas.map((data)=>{
+                                    
+                                    return (
+                                        <>
+                                           <Hometable data={data} key={data.id}/>
+                                      </>
+                                    )
+                                })
+                               } 
+                                </>
+                            )}
                         </table>
                         <div className="action-btn">
-                        <button  style={{backgroundColor:"lightgreen",height:"50px"}}> Start Simulation</button>
-                        <button style={{backgroundColor: "lightblue",height:"50px"}}> Stop Simulation</button>
-                    </div>
+                           
+                           <button  style={{backgroundColor:"green",height:"50px"}} onClick={startsimulator}> Start Simulation</button>
+                           <button style={{backgroundColor: "red",height:"50px"}} onClick={stopimulator}> Stop Simulation</button>
+                       </div>
+                        
+    
+                        
+                        <div className="graph"> 
 
-                     <div className="graph"> 
+                     { datas.map((data)=>{
+                         x =parseInt(data.vehicle.positionx);
+                         y =parseInt(data.vehicle.positiony)
+                              const styleObj = {
+                                position: "absolute",
+                                left: `${x}px`,
+                                top:  `${y}px`,
+                                width: "25px",
+                                height: "25px",
+                                borderRadius: "50%",
+                                backgroundColor: "red",
+                                display:""
+                            }
+                       
+                               
+                              
+                         
+
+                          
+
+                            return(
+                                <>
+                                <div style={styleObj} id={`${data.vehicle.speed}sv${data.id}`} name={data.vehicle.direction}>{data.id}</div>
+                                </>
+                            )
+                            
+                        })
+                     }
+                           
                             <div className="graphitem" id="1"></div>
                             <div className="graphitem" id="2"></div>
                             <div className="graphitem" id="3"></div>

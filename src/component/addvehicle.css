@@ -1,7 +1,14 @@
-body{
-    background-color: black;
-}
 
+
+.container{
+   display: flex;
+   background-color:rgb(21, 27, 27);
+   color: aliceblue;
+   width: 100%;
+}
+.innercontainer{
+   margin-left: 5%;
+ }
 
 .vehiclecontainer{
     display: grid;

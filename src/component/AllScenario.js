@@ -1,7 +1,49 @@
+import {useEffect, useState}from"react";
+    import axios from 'axios';
 import SideBar from "./SideBar";
 import "./allscenario.css"
+import ScenarioTable from "./ScenarioTable"
+import AddVehicle from "./AddVehicle"
+import { Link } from "react-router-dom";
+export const scenarionames = [];
 function AllScenario(){
 
+    const [datas,setDatas]=useState([]);
+
+    async function performAPICall() {
+
+        try {
+        
+           const response = await axios.get("http://localhost:3000/scenario")    
+           const scenarios = response.data;
+            
+           setDatas(scenarios);
+           
+        } catch(error) {
+            console.log(error);
+        }
+          
+      }
+
+    useEffect(() => {
+
+        performAPICall();
+     
+      });
+    
+  const deletall=()=>{
+
+        datas.map((data)=>{
+
+            function handeldelete(){
+                axios.delete(`http://localhost:3000/scenario/${data.id}`)
+               }
+               handeldelete();
+        })
+      
+  } 
+      
+      
   return(
     <>
         <div className="container"><SideBar/>
@@ -10,9 +52,9 @@ function AllScenario(){
                  
                 <h3>All Scenario</h3>
                 <div style={{marginLeft:800, marginTop:20}}>
-                <button>New Scenario</button>
-                <button>Add Vehicle</button>
-                <button>Delete All</button>
+                <Link to="/AddScenario"><button>New Scenario</button></Link>
+                <Link to="/Addvehicle">  <button>Add Vehicle</button></Link>
+                <button onClick={deletall}>Delete All</button>
                 </div>
 
                 <table >
@@ -26,27 +68,27 @@ function AllScenario(){
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Test Scenario</td>
-                                <td>2s</td>
-                                <td>2</td>
-                                <td><button>+</button></td>
-                                
-                                <td><button>Edit</button></td>
-                                <td><button>Delete</button></td>
-                            </tr>
-                     
-                            <tr>
-                                <td>1</td>
-                                <td>Test Scenario</td>
-                                <td>2s</td>
-                                <td>2</td>
-                                <td><button>+</button></td>
-                                
-                                <td><button>Edit</button></td>
-                                <td><button>Delete</button></td>
-                            </tr>
+                           {
+                            datas && (
+                                <>
+                                    {datas.map((data)=>{
+                                        console.log(data,"DD")
+                                        return (
+                                           <>
+
+                                            <ScenarioTable data={data} key={data.id}
+                                            
+                                            />
+                                            
+                                           </>
+                                        )
+                                    })}
+                                </>
+                            )
+                           }
+                              
+                          
+                            
                         </table>
                 </div>
                 </div>

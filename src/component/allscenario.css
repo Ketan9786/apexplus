@@ -32,3 +32,7 @@ button{
  height: 30px;
  color: aliceblue;
 }
+
+.nonedisplay{
+  display: none;
+}
