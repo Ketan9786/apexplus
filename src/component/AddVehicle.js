@@ -11,7 +11,8 @@ function AddVehicle(){
 
     const [datas,setDatas]=useState([]);
     const [vData, setVData] = useState({ vehiclename: "", positionx: Number,positiony:Number,speed:Number });
-    const [direction,setDirect]=useState({direction:""});
+    const [direction,setDirection]=useState({direction:""});
+    const[scenarioid,setScenarioid]=useState();
     const[scenario,setScenario]=useState({scenario:""})
     async function performAPICall() {
 
@@ -44,12 +45,18 @@ function AddVehicle(){
       const handelselect=(event)=>{
       
 
-        setDirect(event.target.value);
+        setDirection(event.target.value);
+       
+
       }
       const handelselectscenario=(event)=>{
-      
-
+        var options = event.target.options;
+        var id      = options[options.selectedIndex].id;
+        var value = options[options.selectedIndex].value;
+        console.log(value);
         setScenario(event.target.value);
+        setScenarioid(id);
+        
       }
 
 
@@ -69,9 +76,9 @@ function AddVehicle(){
        
             // console.log(JSON.stringify(scenarioData));
 
-        
-            datas.map((data)=>{
-                fetch(`http://localhost:3000/scenario/${data.id}`, {
+            console.log(scenarioid)
+            
+                fetch(`http://localhost:3000/scenario/${scenarioid}`, {
                     // Enter your IP address here
         
                     method: "PATCH",
@@ -84,7 +91,7 @@ function AddVehicle(){
                         "Content-Type": "application/json",
                     },
                 });
-            })
+           
          
        
         ClearFields() 
@@ -119,7 +126,7 @@ function AddVehicle(){
 
                 <div className="vehiclecontainer"> 
                     <div className="vehiclecontaineritem" > Scenario List 
-                    <select name="Scenario" id="Scenario" onClick={handelselectscenario}> 
+                    <select name="Scenario" id="Scenario"onClick={handelselectscenario} >   
                     {
                             datas && (
                                 <>
@@ -128,10 +135,10 @@ function AddVehicle(){
                                         return (
                                            <>
                                           
-                                           <option>{data.scenarioname}</option>
+                                           <option id={data.id} >{data.scenarioname}</option>
 
                                          
-                                            
+                                           
                                            
                                            </>
                                         )
@@ -139,8 +146,9 @@ function AddVehicle(){
                                 </>
                             )
                            }
+                           </select>
                         
-                    </select>
+                   
                     </div>
                     <div className="vehiclecontaineritem " > Vehicle Name
                     <input type="text" name="vehiclename" id="vehiclename"value={vData.vehiclename} placeholder="Enter Vehicle Name Here"  onChange={handleInputChange}required /> </div>

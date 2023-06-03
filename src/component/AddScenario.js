@@ -16,7 +16,7 @@ function AddScenario() {
     var scenarioData = {
         "scenarioname":sData.scenarioname,
         "scenariotime":sData.scenariotime ,
-        "vehicle":{}
+        "vehicle":[{}]
     };
 
     function handleClick() {

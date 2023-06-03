@@ -6,14 +6,16 @@ import Hometable from "./Hometable";
 function Homepage() {
     const [datas,setDatas]=useState([]);
     const [start,setStart]=useState(true);
-  
+    
+    const[vdata,setVdata]=useState()
     let x,y;
-   
+   let scenarion=""
     async function performAPICall() {
 
         try {
         
-           const response = await axios.get("http://localhost:3000/scenario")    
+           const response = await axios.get(`http://localhost:3000/scenario`)
+           
            const scenarios = response.data;
             
            setDatas(scenarios);
@@ -21,8 +23,39 @@ function Homepage() {
         } catch(error) {
             console.log(error);
         }
+        
        
       }
+      const handelselectscenario=(event)=>{
+        
+        performAPICallNew(); 
+        var options = event.target.options;
+       
+        var value = options[options.selectedIndex].value;
+        scenarion =  `?scenarioname=${value}`
+        console.log(scenarion);
+
+        
+            performAPICallNew(); 
+            
+      }
+
+      async function performAPICallNew() {
+
+        try {
+        
+           const response = await axios.get(`http://localhost:3000/scenario${scenarion}`)
+           
+           const scenarios = response.data;
+           setVdata(scenarios);
+        //    console.log(scenarios);
+           
+        } catch(error) {
+            console.log(error);
+        }
+        
+      }
+      
       useEffect(() => {
 
         performAPICall();
@@ -44,7 +77,7 @@ function Homepage() {
         let newelm =eleto[i].style.left.split("px");
          
          let newele= parseInt(newelm[0])+parseInt(speed);
-         console.log(newele)
+         
          let towords = newele + "px"
         
          document.getElementsByName("toword")[i].style.left=towords;
@@ -130,16 +163,17 @@ function Homepage() {
                     
                      
                             <p>Scenario  </p>
-                            <select>
+                            <select name="Scenario" id="Scenario" onClick={handelselectscenario} style={{width:"150px"}}>
+                            <option >select scenario</option>
                             {datas &&(
                                    <>
                             {
                                 datas.map((data)=>{
-                                  
+                                   
                                     return (
                                         <>
                                     
-                                            <option>{data.scenarioname}</option>
+                                            <option id={data.id}  >{data.scenarioname}</option>
                                             
                                         </>
                                     )
@@ -165,11 +199,11 @@ function Homepage() {
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
-                            {datas && (
+                            {vdata && (
                                 <>
                                {
-                                datas.map((data)=>{
-                                    
+                                vdata.map((data)=>{
+                                        // console.log("V")
                                     return (
                                         <>
                                            <Hometable data={data} key={data.id}/>
@@ -189,8 +223,8 @@ function Homepage() {
     
                         
                         <div className="graph"> 
-
-                     { datas.map((data)=>{
+                        {vdata ? (<>
+                            { vdata.map((data)=>{
                          x =parseInt(data.vehicle.positionx);
                          y =parseInt(data.vehicle.positiony)
                               const styleObj = {
@@ -218,6 +252,10 @@ function Homepage() {
                             
                         })
                      }
+                        </>):("")} 
+
+
+                    
                            
                             <div className="graphitem" id="1"></div>
                             <div className="graphitem" id="2"></div>
