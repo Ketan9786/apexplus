@@ -6,7 +6,7 @@ function Hometable(data){
   
     
     function handeldelete(event){
-        axios.delete(`http://localhost:3000/scenario/${event.target.id}`)
+        axios.delete(`https://apexplusketan.onrender.com/scenario/${event.target.id}`)
        }
     return(
         <> 

@@ -23,7 +23,7 @@ function AddScenario() {
         
       
         // console.log(JSON.stringify(scenarioData));
-        fetch("http://localhost:3000/scenario", {
+        fetch("https://apexplusketan.onrender.com/scenario", {
             // Enter your IP address here
 
             method: "POST",

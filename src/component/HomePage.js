@@ -14,7 +14,7 @@ function Homepage() {
 
         try {
         
-           const response = await axios.get(`http://localhost:3000/scenario`)
+           const response = await axios.get(`https://apexplusketan.onrender.com/scenario`)
            
            const scenarios = response.data;
             
@@ -44,7 +44,7 @@ function Homepage() {
 
         try {
         
-           const response = await axios.get(`http://localhost:3000/scenario${scenarion}`)
+           const response = await axios.get(`https://apexplusketan.onrender.com/scenario${scenarion}`)
            
            const scenarios = response.data;
            setVdata(scenarios);

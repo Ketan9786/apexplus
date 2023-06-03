@@ -14,7 +14,7 @@ function AllScenario(){
 
         try {
         
-           const response = await axios.get("http://localhost:3000/scenario")    
+           const response = await axios.get("https://apexplusketan.onrender.com/scenario")    
            const scenarios = response.data;
             
            setDatas(scenarios);
@@ -36,7 +36,7 @@ function AllScenario(){
         datas.map((data)=>{
 
             function handeldelete(){
-                axios.delete(`http://localhost:3000/scenario/${data.id}`)
+                axios.delete(`https://apexplusketan.onrender.com/scenario/${data.id}`)
                }
                handeldelete();
         })

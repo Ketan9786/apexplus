@@ -18,7 +18,7 @@ function AddVehicle(){
 
         try {
         
-           const response = await axios.get("http://localhost:3000/scenario")    
+           const response = await axios.get("https://apexplusketan.onrender.com/scenario")    
            const scenarios = response.data;
             
            setDatas(scenarios);
@@ -78,7 +78,7 @@ function AddVehicle(){
 
             console.log(scenarioid)
             
-                fetch(`http://localhost:3000/scenario/${scenarioid}`, {
+                fetch(`https://apexplusketan.onrender.com/scenario/${scenarioid}`, {
                     // Enter your IP address here
         
                     method: "PATCH",
