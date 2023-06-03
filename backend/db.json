@@ -1,20 +1,12 @@
 {
-  "scenario": [
-    {
-      "scenarioname": "Ketan",
-      "scenariotime": "22",
-      "vehicle": [
-        {}
-      ],
-      "id": 1
-    },
-    {
-      "scenarioname": "Kishorq",
-      "scenariotime": "22",
-      "vehicle": [
-        {}
-      ],
-      "id": 2
-    }
-  ]
-}
+    "scenario": [
+      {
+        "scenarioname": "Ketan",
+        "scenariotime": "22",
+        "vehicle": {
+         
+        }
+        
+      }
+    ]
+  }
