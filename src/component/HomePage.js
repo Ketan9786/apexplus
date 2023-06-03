@@ -140,15 +140,19 @@ function Homepage() {
         } 
         
      }
-     
+     console.log(datas)
     
     const stopimulator=()=>{
         clearInterval(startsimulators);
-        
+       
     }
-    
-    
-        
+    let settimeoout
+    for(let i=0; i<datas.length;i++){
+          settimeoout= parseInt(datas[i].scenariotime) *1000;
+         console.log(settimeoout)                                
+       
+    }
+    setTimeout(stopimulator, {settimeoout});
 
    
    
@@ -203,7 +207,7 @@ function Homepage() {
                                 <>
                                {
                                 vdata.map((data)=>{
-                                        // console.log("V")
+                                   
                                     return (
                                         <>
                                            <Hometable data={data} key={data.id}/>
